@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bharat Mishra Portfolio v2 — Next.js + TypeScript
 
-## Getting Started
-
-First, run the development server:
+## Quickstart (5 minutes to live)
 
 ```bash
+# 1. Create Next.js app
+npx create-next-app@14 bharat-portfolio --typescript --tailwind --app --no-src-dir --no-eslint
+cd bharat-portfolio
+
+# 2. Remove boilerplate
+rm -rf app/page.tsx app/globals.css public/* components 2>/dev/null; true
+mkdir -p components
+
+# 3. Copy ALL files from this bundle into the project at their exact paths:
+#    app/globals.css
+#    app/layout.tsx
+#    app/page.tsx
+#    components/images.ts        ← contains base64 logo images
+#    components/NavBar.tsx
+#    components/Hero.tsx
+#    components/About.tsx
+#    components/Skills.tsx
+#    components/ProjectSection.tsx
+#    components/Achievements.tsx
+#    components/Contact.tsx
+#    components/Footer.tsx
+#    components/Scene3D.tsx
+#    components/LoadingScreen.tsx
+
+# 4. Run dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# → http://localhost:3000
+
+# 5. Deploy
+npx vercel --prod
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Component Map
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+page.tsx
+├── Scene3D        (fixed canvas — Three.js via CDN, no SSR)
+├── NavBar         (fixed top, glassmorphism on scroll, new logo)
+└── main
+    ├── Hero           (portrait, typewriter, stats, CTAs)
+    ├── About          (bio, highlights, info card)
+    ├── Skills         (8 categories, SVG icons, hover tags)
+    ├── ProjectSection (Rakshak-H + Aerial-Detect, correct GitHub links)
+    ├── Achievements   (timeline: Buildathon 2026, PW cert, B.Com)
+    └── Contact        (links, availability card, location)
+    Footer         (logo, copyright, links)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## GitHub Links
+- Rakshak-H:   https://github.com/bharatmishraji1/RAKSHAK-H-Honeypot
+- Aerial-Detect: https://github.com/bharatmishraji1/Aerial-Object-Classification-Detection
+- Profile:     https://github.com/bharatmishraji1
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Key Design Decisions
+- **Three.js via CDN** — avoids bundle/SSR issues, loads after mount
+- **Base64 images** — zero external image hosting, fully self-contained
+- **No R3F** — removes the `three` version conflict that caused blank renders
+- **CSS animations** — no Framer Motion dep needed, works everywhere
+- **Scroll reveal** — pure IntersectionObserver, no library overhead
